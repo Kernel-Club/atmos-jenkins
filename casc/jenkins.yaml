@@ -1,0 +1,5 @@
+# Jenkins controller configuration (JCasC). Applied at every start; changes made in the web interface are overwritten.
+# No secrets here: values like ${NAME} are read from the environment or from files at start.
+
+jenkins:
+  systemMessage: "Atmos CI platform. Configured from Git (atmos-jenkins); manual changes are overwritten."
