@@ -2,7 +2,7 @@
 # No secrets here: values like ${NAME} are read from the environment or from files at start.
 
 jenkins:
-  systemMessage: "Atmos CI platform. Configured from Git (atmos-jenkins); manual changes are overwritten."
+  systemMessage: "Atmos CI platform. Configured from Git (atmos-jenkins) manual changes are overwritten."
 
   # One build at a time, on the built-in node.
   numExecutors: 1
