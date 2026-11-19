@@ -21,9 +21,9 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 USER jenkins
 
-# Plugins from the pinned list; dependencies get the minimum required versions.
+# Plugins from the pinned list (all dependencies included, so nothing is resolved at build time).
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN jenkins-plugin-cli --latest false --plugin-file /usr/share/jenkins/ref/plugins.txt
+RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
 # Configuration as code instead of the setup wizard.
 COPY --chown=jenkins:jenkins casc/ /var/jenkins_config/
