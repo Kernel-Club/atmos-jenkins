@@ -1,0 +1,7 @@
+# Plugins of the Jenkins image, one per line: <id>:<version>
+# Dependencies are resolved at build time with --latest false (minimum required versions).
+configuration-as-code:2147.v8a_8d38668c72
+workflow-aggregator:608.v67378e9d3db_1
+git:5.11.0
+credentials:1514.vb_01eb_014e7d4
+docker-workflow:653.v2f2c08eff0ec
