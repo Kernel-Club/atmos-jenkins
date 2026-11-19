@@ -4,6 +4,9 @@
 jenkins:
   systemMessage: "Atmos CI platform. Configured from Git (atmos-jenkins); manual changes are overwritten."
 
+  # One build at a time, on the built-in node.
+  numExecutors: 1
+
   # Only the admin account; it is created and its password reset at every start.
   securityRealm:
     local:
@@ -22,3 +25,8 @@ jenkins:
 
   # No inbound agents: builds run on the built-in node.
   slaveAgentPort: -1
+
+unclassified:
+  # Address of Jenkins behind Traefik, used in links and build notifications.
+  location:
+    url: https://jenkins.atmos.lan/
