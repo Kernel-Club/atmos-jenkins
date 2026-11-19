@@ -18,9 +18,7 @@ jenkins:
       allowAnonymousRead: false
 
   # CSRF protection.
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: false
+  crumbIssuer: standard
 
   # No inbound agents: builds run on the built-in node.
   slaveAgentPort: -1
