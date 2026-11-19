@@ -1,0 +1,32 @@
+# Jenkins controller configuration (JCasC). Applied at every start; changes made in the web interface are overwritten.
+# No secrets here: values like ${NAME} are read from the environment or from files at start.
+
+jenkins:
+  systemMessage: "Atmos CI platform. Configured from Git (atmos-jenkins) manual changes are overwritten."
+
+  # One build at a time, on the built-in node.
+  numExecutors: 1
+
+  # Only the admin account; it is created and its password reset at every start.
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: ${JENKINS_ADMIN_PASSWORD}
+
+  # Signed-in users can do everything; anonymous users get nothing, not even read access.
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  # CSRF protection.
+  crumbIssuer: standard
+
+  # No inbound agents: builds run on the built-in node.
+  slaveAgentPort: -1
+
+unclassified:
+  # Address of Jenkins behind Traefik, used in links and build notifications.
+  location:
+    url: https://jenkins.atmos.lan/
