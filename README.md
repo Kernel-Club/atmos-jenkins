@@ -1,45 +1,78 @@
 # atmos-jenkins
 
-CI pipeline of the on-premise platform of **Atmos**: checks every change of the application and publishes versioned images to Nexus.
+Jenkins platform of the on-premise version of **Atmos**: the Jenkins image, its plugins and its configuration as code. Jenkins starts already configured, without the setup wizard and without manual steps.
 
 ```text
-atmos-dev (develop) ─► Jenkins: lint → tests → build ─► nexus.atmos.lan:5000 ─► Flux
+atmos-jenkins (this repository, release tag)
+  └─ atmos-ansible (roles/jenkins) clones the tag on the jenkins server
+       ├─ builds the image atmos-jenkins:<commit>
+       ├─ places the secrets from Ansible Vault as read-only files (/run/secrets)
+       └─ runs the container → JCasC applies casc/jenkins.yaml at every start
 ```
 
-## Pipeline
+## Contents
 
-| Stage | What happens |
+| Path | What it does |
 |---|---|
-| Checkout | `develop` of [atmos-dev](https://github.com/Kernel-Club/atmos-dev), SCM polling, read-only deploy key |
-| Lint, tests | A failed check stops the build |
-| Build | Backend and frontend images; frontend uses the API address `/api` |
-| Push | `nexus.atmos.lan:5000/atmos-{backend,frontend}:<build>-<short-sha>` |
-| Cleanup | Local images and build cache are removed |
+| `Dockerfile` | Pinned Jenkins LTS, Docker CLI (builds use the Docker Engine of the server through its socket), the plugins and the JCasC file |
+| `plugins.txt` | All plugins with their dependencies, pinned like a lock file |
+| `casc/jenkins.yaml` | Configuration as code (JCasC): security, executor, URL, credentials |
 
-Tag example: `42-a1b2c3d`. Flux selects the image with the highest build number. After a rebuild of the `jenkins` VM, set **Next Build Number** of the job above the highest tag in Nexus, otherwise Flux keeps the old image.
+## Configuration
 
-## Setup in Jenkins
+| Setting | Value |
+|---|---|
+| Users | Only `admin`; no sign-up, no anonymous access |
+| Security | CSRF protection on; inbound agent port off |
+| Builds | One executor on the built-in node; build steps run in temporary containers |
+| URL | `https://jenkins.atmos.lan/` (through Traefik on `nexus-traefik`) |
+| Credentials | `nexus-push`: user `jenkins-push`, pushes images to `nexus.atmos.lan:5000` |
 
-Jenkins runs on the `jenkins` VM and builds with the Docker Engine of that VM; Nexus is on the separate `nexus-traefik` VM. Both are installed by [atmos-ansible](https://github.com/Kernel-Club/atmos-ansible). The job is created by hand:
+`atmos-dev` is public, so Jenkins checks it out over HTTPS without a GitHub credential. The pipeline (`Jenkinsfile`) lives in `atmos-dev`, next to the code it builds.
 
-1. Credentials: the deploy key for `atmos-dev` and the Nexus push user.
-2. Job type "Pipeline script from SCM", pointing to this repository (`Jenkinsfile`).
-3. Trigger: SCM polling (GitHub webhooks cannot reach the home network).
+Changes made in the web interface are overwritten at the next start: the configuration lives only in this repository. The valid JCasC keys are listed in Jenkins under *Manage Jenkins → Configuration as Code → Documentation*.
 
-Open Jenkins at `https://jenkins.atmos.lan` (through Traefik on `nexus-traefik`).
+## Secrets
+
+This repository contains no secrets. `casc/jenkins.yaml` refers to them as `${NAME}`; the values are in Ansible Vault in `atmos-ansible` and reach Jenkins as files in `/run/secrets`.
+
+| Variable | Used for |
+|---|---|
+| `JENKINS_ADMIN_PASSWORD` | password of `admin` |
+| `NEXUS_PUSH_PASSWORD` | credential `nexus-push` |
+
+## Release a change
+
+1. Change the files in a `feature/*` or `fix/*` branch and open a Pull Request.
+2. To test before the merge, set `jenkins_platform_version` in `atmos-ansible` (`group_vars/all/versions.yml`) to the branch and run `ansible-playbook site.yml --tags jenkins`.
+3. After the merge, tag `main` (`v0.3.0`, ...), set `jenkins_platform_version` to the tag and run the playbook again.
+
+Ansible builds a new image only for a new commit; the build history in the `jenkins_home` volume is kept.
+
+## Update the plugins
+
+Plugins get security fixes often. To update, list the latest versions of the direct plugins with the image of the pinned Jenkins version and replace `plugins.txt` with the result:
+
+```bash
+ssh atmos-jenkins
+sudo docker run --rm jenkins/jenkins:2.580.2-lts-jdk21 jenkins-plugin-cli --no-download --list \
+  --plugins configuration-as-code workflow-aggregator git credentials docker-workflow
+```
+
+Copy the list under "All requested plugins" in the format `<id>:<version>`, then release as above. Jenkins shows the plugins with known vulnerabilities under *Manage Jenkins*.
 
 ## Security
 
 - Jenkins does CI only: no kubeconfig, no access to the cluster or to `atmos-k8s`.
-- The Docker socket gives Jenkins root only on the `jenkins` VM, not on Nexus or Traefik.
-- Credentials live in the Jenkins Credentials store, never in this repository (see `.gitignore`).
+- The Docker socket gives Jenkins root rights on the `jenkins` server only, not on Nexus or Traefik.
+- Jenkins is reachable only through Traefik: `ufw` on `jenkins` accepts port 8080 only from `nexus-traefik`.
 
 ## Related
 
 | Repository | Role |
 |---|---|
-| [atmos-dev](https://github.com/Kernel-Club/atmos-dev) | Application source and on-premise docs (`docs/on-premise/`) |
-| [atmos-ansible](https://github.com/Kernel-Club/atmos-ansible) | Installs Jenkins, Nexus and Traefik |
+| [atmos-dev](https://github.com/Kernel-Club/atmos-dev) | Application, `Jenkinsfile` and on-premise docs (`docs/on-premise/`) |
+| [atmos-ansible](https://github.com/Kernel-Club/atmos-ansible) | Creates the servers and deploys this platform (`roles/jenkins/`) |
 | [atmos-k8s](https://github.com/Kernel-Club/atmos-k8s) | Flux deploys the published images |
 
 Branching: `main` + `feature/*` / `fix/*` with a Pull Request ([branching model](https://github.com/Kernel-Club/atmos-dev/blob/develop/docs/on-premise/branching-model.md)).
