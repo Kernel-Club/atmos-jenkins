@@ -16,7 +16,8 @@ atmos-jenkins (this repository, release tag)
 |---|---|
 | `Dockerfile` | Pinned Jenkins LTS, Docker CLI (builds use the Docker Engine of the server through its socket), the plugins and the JCasC file |
 | `plugins.txt` | All plugins with their dependencies, pinned like a lock file |
-| `casc/jenkins.yaml` | Configuration as code (JCasC): security, executor, URL, credentials |
+| `casc/jenkins.yaml` | Configuration as code (JCasC): security, executor, URL, credentials, appearance |
+| `theme/` | Atmos colors and logo (CSS on top of the dark theme) |
 
 ## Configuration
 
@@ -26,6 +27,7 @@ atmos-jenkins (this repository, release tag)
 | Security | CSRF protection on; inbound agent port off |
 | Builds | One executor on the built-in node; build steps run in temporary containers |
 | URL | `https://jenkins.atmos.lan/` (through Traefik on `nexus-traefik`) |
+| Appearance | English for everyone; dark theme with the Atmos colors, logo and the name "Atmos CI" |
 | Credentials | `nexus-push`: user `jenkins-push`, pushes images to `nexus.atmos.lan:5000` |
 
 `atmos-dev` is public, so Jenkins checks it out over HTTPS without a GitHub credential. The pipeline (`Jenkinsfile`) lives in `atmos-dev`, next to the code it builds.
@@ -56,7 +58,7 @@ Plugins get security fixes often. To update, list the latest versions of the dir
 ```bash
 ssh atmos-jenkins
 sudo docker run --rm jenkins/jenkins:2.580.2-lts-jdk21 jenkins-plugin-cli --no-download --list \
-  --plugins configuration-as-code workflow-aggregator git credentials docker-workflow
+  --plugins configuration-as-code workflow-aggregator git credentials docker-workflow locale dark-theme simple-theme-plugin
 ```
 
 Copy the list under "All requested plugins" in the format `<id>:<version>`, then release as above. Jenkins shows the plugins with known vulnerabilities under *Manage Jenkins*.
