@@ -26,6 +26,18 @@ jenkins:
   # No inbound agents: builds run on the built-in node.
   slaveAgentPort: -1
 
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          # Nexus user that pushes images (created by atmos-ansible, roles/nexus).
+          - usernamePassword:
+              scope: GLOBAL
+              id: nexus-push
+              username: jenkins-push
+              password: ${NEXUS_PUSH_PASSWORD}
+              description: Push images to the Nexus repository atmos-docker
+
 unclassified:
   # Address of Jenkins behind Traefik, used in links and build notifications.
   location:
