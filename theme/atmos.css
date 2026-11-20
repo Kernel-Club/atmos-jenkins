@@ -1,0 +1,39 @@
+/* Atmos look for Jenkins, applied on top of the dark theme by the Simple Theme plugin.
+   Colors from the Atmos frontend (atmos-dev). */
+
+:root,
+[data-theme] {
+  --background: #0b0f14;
+  --header-background: #0e1520;
+  --card-background: #111a26;
+  --text-color: #e7f3ff;
+  --text-color-secondary: #8d9bad;
+  --link-color: #55adff;
+  --link-color--hover: #70bdff;
+  --accent-color: #249cff;
+  --primary: #249cff;
+  --focus-input-border: #249cff;
+}
+
+body {
+  background: radial-gradient(circle at 50% 0%, #17263a 0%, #0b0f14 45%) fixed, #0b0f14;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Brand: the Atmos logo and name instead of the Jenkins butler */
+#jenkins-head-icon {
+  content: url("/userContent/atmos-logo.svg");
+}
+
+#jenkins-name-icon {
+  display: none;
+}
+
+#jenkins-home-link::after {
+  content: "Atmos CI";
+  margin-left: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #e7f3ff;
+}

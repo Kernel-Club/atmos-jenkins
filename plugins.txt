@@ -1,5 +1,5 @@
 # Plugins of the Jenkins image with all dependencies, pinned like a lock file: <id>:<version>
-# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow.
+# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow, locale, dark-theme, simple-theme-plugin.
 # To update: resolve the latest versions of the direct plugins and replace this list (see README).
 antisamy-markup-formatter:173.v680e3a_b_69ff3
 apache-httpcomponents-client-4-api:4.5.14-269.vfa_2321039a_83
@@ -15,6 +15,7 @@ commons-text-api:1.15.0-218.va_61573470393
 configuration-as-code:2147.v8a_8d38668c72
 credentials:1514.vb_01eb_014e7d4
 credentials-binding:728.v902a_273b_8947
+dark-theme:652.vea_da_dfea_e769
 display-url-api:2.217.va_6b_de84cc74b_
 docker-commons:477.v289085a_b_6896
 docker-workflow:653.v2f2c08eff0ec
@@ -27,6 +28,7 @@ instance-identity:203.v15e81a_1b_7a_38
 ionicons-api:94.vcc3065403257
 jackson-annotations2-api:2.23-28.v3db_d0f5f2387
 jackson2-api:2.22.4-449.v4ee9f4ec4123
+jackson3-api:3.3.0-106.v7fce5d2b_e547
 jakarta-activation-api:2.1.4-1
 jakarta-mail-api:2.1.5-1
 jakarta-xml-bind-api:4.0.9-19.v2b_a_5b_44d9a_1c
@@ -34,6 +36,7 @@ javax-activation-api:1.2.0-8
 jaxb:2.3.9-143.v5979df3304e6
 joda-time-api:2.15.1-211.ve499f52b_da_33
 json-api:20260814-226.v20f9685d642c
+locale:641.v84f22d75fd8b_
 mailer:534.v1b_36f5864073
 mina-sshd-api-common:2.20.1-199.v8ce76b_c93542
 mina-sshd-api-core:2.20.1-199.v8ce76b_c93542
@@ -51,9 +54,12 @@ plugin-util-api:7.1403.vd380b_c42e90c
 prism-api:1.30.0-741.v034eb_0b_0a_a_fa_
 scm-api:728.vc30dcf7a_0df5
 script-security:1436.v1082791135e4
+simple-theme-plugin:230.v8b_fd91b_b_800c
 snakeyaml-api:2.7-152.vc672728cf536
+snakeyaml-engine-api:3.2-18.v885ed7ff698f
 ssh-credentials:372.va_250881b_08cd
 structs:362.va_b_695ef4fdf9
+theme-manager:368.v587224fde1f6
 variant:70.va_d9f17f859e0
 woodstox-core-api:7.3.0-16.v017f30ed004c
 workflow-aggregator:608.v67378e9d3db_1

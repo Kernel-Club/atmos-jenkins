@@ -2,7 +2,7 @@
 # No secrets here: values like ${NAME} are read from the environment or from files at start.
 
 jenkins:
-  systemMessage: "Atmos CI platform. Configured from Git (atmos-jenkins) manual changes are overwritten."
+  systemMessage: "Welcome to Atmos CI, the build platform of Atmos. Settings live in Git (atmos-jenkins): changes made here are reset at the next restart."
 
   # One build at a time, on the built-in node.
   numExecutors: 1
@@ -37,6 +37,22 @@ credentials:
               username: jenkins-push
               password: ${NEXUS_PUSH_PASSWORD}
               description: Push images to the Nexus repository atmos-docker
+
+appearance:
+  # English for everyone, whatever language the browser asks for.
+  locale:
+    systemLocale: en
+    ignoreAcceptLanguage: true
+  # Dark theme for all users, with the Atmos colors and logo on top.
+  themeManager:
+    disableUserThemes: true
+    theme: dark
+  simpleTheme:
+    elements:
+      - cssUrl:
+          url: /userContent/atmos.css
+      - faviconUrl:
+          url: /userContent/atmos-logo.svg
 
 unclassified:
   # Address of Jenkins behind Traefik, used in links and build notifications.
