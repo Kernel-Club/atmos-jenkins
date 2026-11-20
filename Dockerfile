@@ -25,6 +25,10 @@ USER jenkins
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
+# Atmos look: copied to JENKINS_HOME/userContent at every start (".override" replaces older copies).
+COPY --chown=jenkins:jenkins theme/atmos.css /usr/share/jenkins/ref/userContent/atmos.css.override
+COPY --chown=jenkins:jenkins theme/atmos-logo.svg /usr/share/jenkins/ref/userContent/atmos-logo.svg.override
+
 # Configuration as code instead of the setup wizard.
 COPY --chown=jenkins:jenkins casc/ /var/jenkins_config/
 ENV CASC_JENKINS_CONFIG=/var/jenkins_config/jenkins.yaml \
