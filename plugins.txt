@@ -1,5 +1,5 @@
 # Plugins of the Jenkins image with all dependencies, pinned like a lock file: <id>:<version>
-# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow, locale, dark-theme, simple-theme-plugin.
+# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow, locale, dark-theme, simple-theme-plugin, job-dsl.
 # To update: resolve the latest versions of the direct plugins and replace this list (see README).
 antisamy-markup-formatter:173.v680e3a_b_69ff3
 apache-httpcomponents-client-4-api:4.5.14-269.vfa_2321039a_83
@@ -34,6 +34,7 @@ jakarta-mail-api:2.1.5-1
 jakarta-xml-bind-api:4.0.9-19.v2b_a_5b_44d9a_1c
 javax-activation-api:1.2.0-8
 jaxb:2.3.9-143.v5979df3304e6
+job-dsl:3752.vb_199526b_20c3
 joda-time-api:2.15.1-211.ve499f52b_da_33
 json-api:20260814-226.v20f9685d642c
 locale:641.v84f22d75fd8b_

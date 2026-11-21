@@ -54,6 +54,10 @@ appearance:
       - faviconUrl:
           url: /userContent/atmos-logo.svg
 
+# Jobs as code (Job DSL), created at every start.
+jobs:
+  - file: /var/jenkins_config/jobs/atmos.groovy
+
 unclassified:
   # Address of Jenkins behind Traefik, used in links and build notifications.
   location:
