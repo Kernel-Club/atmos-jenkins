@@ -7,7 +7,7 @@ atmos-jenkins (this repository, release tag)
   └─ atmos-ansible (roles/jenkins) clones the tag on the jenkins server
        ├─ builds the image atmos-jenkins:<commit>
        ├─ places the secrets from Ansible Vault as read-only files (/run/secrets)
-       └─ runs the container → JCasC applies casc/jenkins.yaml at every start
+       └─ runs the container → JCasC applies casc/jenkins.yaml and creates the job at every start
 ```
 
 ## Contents
@@ -17,6 +17,7 @@ atmos-jenkins (this repository, release tag)
 | `Dockerfile` | Pinned Jenkins LTS, Docker CLI (builds use the Docker Engine of the server through its socket), the plugins and the JCasC file |
 | `plugins.txt` | All plugins with their dependencies, pinned like a lock file |
 | `casc/jenkins.yaml` | Configuration as code (JCasC): security, executor, URL, credentials, appearance |
+| `casc/jobs/atmos.groovy` | The CI job of Atmos (Job DSL) |
 | `theme/` | Atmos colors and logo (CSS on top of the dark theme) |
 
 ## Configuration
@@ -29,6 +30,7 @@ atmos-jenkins (this repository, release tag)
 | URL | `https://jenkins.atmos.lan/` (through Traefik on `nexus-traefik`) |
 | Appearance | English for everyone; dark theme with the Atmos colors, logo and the name "Atmos CI" |
 | Credentials | `nexus-push`: user `jenkins-push`, pushes images to `nexus.atmos.lan:5000` |
+| Job | `atmos`: `Jenkinsfile` from `develop` of `atmos-dev`, polls GitHub about every 5 minutes |
 
 `atmos-dev` is public, so Jenkins checks it out over HTTPS without a GitHub credential. The pipeline (`Jenkinsfile`) lives in `atmos-dev`, next to the code it builds.
 
@@ -58,7 +60,7 @@ Plugins get security fixes often. To update, list the latest versions of the dir
 ```bash
 ssh atmos-jenkins
 sudo docker run --rm jenkins/jenkins:2.580.2-lts-jdk21 jenkins-plugin-cli --no-download --list \
-  --plugins configuration-as-code workflow-aggregator git credentials docker-workflow locale dark-theme simple-theme-plugin
+  --plugins configuration-as-code workflow-aggregator git credentials docker-workflow locale dark-theme simple-theme-plugin job-dsl
 ```
 
 Copy the list under "All requested plugins" in the format `<id>:<version>`, then release as above. Jenkins shows the plugins with known vulnerabilities under *Manage Jenkins*.
