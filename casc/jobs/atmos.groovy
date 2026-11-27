@@ -2,7 +2,13 @@
 // The pipeline itself is the Jenkinsfile in atmos-dev.
 
 pipelineJob('atmos') {
-  description('CI of Atmos: lint, tests and images in Nexus for every change of develop. Pipeline: Jenkinsfile in atmos-dev.')
+  description('CI of Atmos: checks, tests and images in Nexus for every change of develop. Pipeline: Jenkinsfile in atmos-dev.')
+
+  // Manual builds of a test branch (for example to prove that a check stops the build).
+  // Polling always uses the default, develop. Only develop publishes images (Jenkinsfile).
+  parameters {
+    stringParam('BRANCH', 'develop', 'Branch of atmos-dev to build. Only develop publishes images.')
+  }
 
   definition {
     cpsScm {
@@ -11,11 +17,12 @@ pipelineJob('atmos') {
           remote {
             url('https://github.com/Kernel-Club/atmos-dev.git')   // public: no credential
           }
-          branch('*/develop')
+          branch('*/${BRANCH}')
         }
       }
       scriptPath('Jenkinsfile')
-      lightweight(true)   // read only the Jenkinsfile first, not the whole repository
+      // Full checkout: a lightweight checkout cannot expand the BRANCH parameter reliably.
+      lightweight(false)
     }
   }
 
