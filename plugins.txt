@@ -1,8 +1,10 @@
 # Plugins of the Jenkins image with all dependencies, pinned like a lock file: <id>:<version>
-# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow, locale, dark-theme, simple-theme-plugin, job-dsl, prometheus.
+# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow, locale, dark-theme, simple-theme-plugin, job-dsl, prometheus, warnings-ng, htmlpublisher, generic-webhook-trigger.
 # To update: resolve the latest versions of the direct plugins and replace this list (see README).
+analysis-model-api:14.21.0-1046.vb_feb_1256ee9f
 antisamy-markup-formatter:173.v680e3a_b_69ff3
 apache-httpcomponents-client-4-api:4.5.14-269.vfa_2321039a_83
+apache-httpcomponents-client-5-api:5.6.5-209.vd1010d57ee17
 asm-api:9.11.1-226.vff833a_e4c58e
 authentication-tokens:1.144.v5ff4a_5ec5c33
 bootstrap5-api:5.3.9-1156.va_4c7fef67c56
@@ -13,19 +15,23 @@ checks-api:441.v54e82638ca_71
 cloudbees-folder:6.1107.v31f8955765c8
 commons-lang3-api:3.21.0-122.v6a_ea_4fd34049
 commons-text-api:1.15.0-218.va_61573470393
-configuration-as-code:2150.v9cb_6a_756737e
+configuration-as-code:2151.va_012b_08f3cc4
 credentials:1521.v1e4763284417
 credentials-binding:728.v902a_273b_8947
 dark-theme:652.vea_da_dfea_e769
+data-tables-api:2.3.8-1647.vb_492e141cc87
 display-url-api:2.217.va_6b_de84cc74b_
 docker-commons:477.v289085a_b_6896
 docker-workflow:653.v2f2c08eff0ec
 durable-task:686.v80ff80875b_82
 echarts-api:6.1.0-1321.v86c4c5114494
 font-awesome-api:7.3.1-1013.v0835a_879ec6d
+forensics-api:4.1977.v0f55b_7ee93a_4
+generic-webhook-trigger:2.4.3
 git:5.11.0
 git-client:6.7.1
 gson-api:2.15.0-212.v085f60a_8093b_
+htmlpublisher:429
 instance-identity:203.v15e81a_1b_7a_38
 ionicons-api:94.vcc3065403257
 jackson-annotations2-api:2.23-28.v3db_d0f5f2387
@@ -40,12 +46,15 @@ job-dsl:3752.vb_199526b_20c3
 joda-time-api:2.15.1-211.ve499f52b_da_33
 jquery3-api:3.7.1-687.v68d468e40b_30
 json-api:20260814-226.v20f9685d642c
+json-path-api:3.0.0-236.v4298487c9d01
+jsoup:1.24.1-112.va_e71e68b_60f9
 junit:1458.1460.vd53b_087eeb_2c
 locale:641.v84f22d75fd8b_
 mailer:534.v1b_36f5864073
 metrics:4.2.37-494.v06f9a_939d33a_
 mina-sshd-api-common:2.20.1-199.v8ce76b_c93542
 mina-sshd-api-core:2.20.1-199.v8ce76b_c93542
+nimbus-jose-jwt-api:10.10-12.vd4e6d651b_7f7
 pipeline-build-step:605.v00486e8f4b_3e
 pipeline-groovy-lib:822.vc95f70dea_db_7
 pipeline-input-step:568.v0c9db_2652741
@@ -68,6 +77,7 @@ ssh-credentials:372.va_250881b_08cd
 structs:362.va_b_695ef4fdf9
 theme-manager:368.v587224fde1f6
 variant:70.va_d9f17f859e0
+warnings-ng:13.10416.v7a_a_90a_6ffb_e9
 woodstox-core-api:7.3.0-16.v017f30ed004c
 workflow-aggregator:608.v67378e9d3db_1
 workflow-api:1429.v7a_1b_efb_a_f7c5
