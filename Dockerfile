@@ -22,8 +22,12 @@ RUN apt-get update \
 USER jenkins
 
 # Plugins from the pinned list (all dependencies included, so nothing is resolved at build time).
+# Download mirror: the default redirector (get.jenkins.io) sometimes sends a file to a mirror that
+# answers with a few KB/s and the build takes very long; this mirror was measured fast from the host.
+# If it is ever unavailable, set it to https://updates.jenkins.io/download (the default).
+ARG JENKINS_UC_DOWNLOAD=https://mirror.twds.com.tw/jenkins
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
+RUN JENKINS_UC_DOWNLOAD="${JENKINS_UC_DOWNLOAD}" jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
 # Atmos look: copied to JENKINS_HOME/userContent at every start (".override" replaces older copies).
 COPY --chown=jenkins:jenkins theme/atmos.css /usr/share/jenkins/ref/userContent/atmos.css.override
