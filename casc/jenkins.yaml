@@ -59,6 +59,11 @@ appearance:
           url: /userContent/atmos.css
       - faviconUrl:
           url: /userContent/atmos-logo.svg
+  # Stage graph of the running or last build at the top of the job page and of each build page
+  # (Pipeline Graph View), like the workflow view of GitHub Actions.
+  pipelineGraphView:
+    showGraphOnJobPage: true
+    showGraphOnBuildPage: true
 
 # Jobs as code (Job DSL), created at every start.
 jobs:
