@@ -29,7 +29,7 @@ atmos-jenkins (this repository, release tag)
 | Builds | One executor on the built-in node; build steps run in temporary containers |
 | URL | `https://jenkins.atmos.lan/` (through Traefik on `nexus-traefik`) |
 | Appearance | English for everyone; dark theme with the Atmos colors, logo and the name "Atmos CI" |
-| Credentials | `nexus-push`: user `jenkins-push`, pushes images to `nexus.atmos.lan:5000` |
+| Credentials | `nexus-push`: user `jenkins-push`, pushes images to `nexus.atmos.lan:5000`; `sonar-token`: SonarQube Cloud token for the analysis of `atmos-dev` |
 | Job | `atmos`: `Jenkinsfile` from `develop` of `atmos-dev`, polls GitHub about every 5 minutes; parameter `BRANCH` for manual builds of a test branch (only `develop` publishes images) |
 | Metrics | `/prometheus/` (Prometheus plugin) answers without login; Traefik allows this path only from the cluster nodes (`atmos-ansible`) |
 
@@ -61,7 +61,7 @@ Plugins get security fixes often. To update, list the latest versions of the dir
 ```bash
 ssh atmos-jenkins
 sudo docker run --rm jenkins/jenkins:2.580.2-lts-jdk21 jenkins-plugin-cli --no-download --list \
-  --plugins configuration-as-code workflow-aggregator git credentials docker-workflow locale dark-theme simple-theme-plugin job-dsl prometheus warnings-ng htmlpublisher generic-webhook-trigger
+  --plugins configuration-as-code workflow-aggregator git credentials docker-workflow locale dark-theme simple-theme-plugin job-dsl prometheus warnings-ng htmlpublisher generic-webhook-trigger pipeline-graph-view
 ```
 
 Copy the list under "All requested plugins" in the format `<id>:<version>`, then release as above. Jenkins shows the plugins with known vulnerabilities under *Manage Jenkins*.

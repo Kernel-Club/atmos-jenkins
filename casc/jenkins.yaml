@@ -37,6 +37,12 @@ credentials:
               username: jenkins-push
               password: ${NEXUS_PUSH_PASSWORD}
               description: Push images to the Nexus repository atmos-docker
+          # SonarQube Cloud token "jenkins-atmos" (Ansible Vault): code analysis of atmos-dev.
+          - string:
+              scope: GLOBAL
+              id: sonar-token
+              secret: ${SONAR_TOKEN}
+              description: Analysis of atmos-dev in SonarQube Cloud
 
 appearance:
   # English for everyone, whatever language the browser asks for.
