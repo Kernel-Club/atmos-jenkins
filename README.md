@@ -28,7 +28,7 @@ atmos-jenkins (this repository, release tag)
 | Security | CSRF protection on; inbound agent port off |
 | Builds | One executor on the built-in node; build steps run in temporary containers |
 | URL | `https://jenkins.atmos.lan/` (through Traefik on `nexus-traefik`) |
-| Appearance | English for everyone; dark theme with the Atmos colors, logo and the name "Atmos CI" |
+| Appearance | English for everyone; dark theme with the Atmos colors, logo and the name "Atmos CI"; stage graph on the job and build pages (Pipeline Graph View) |
 | Credentials | `nexus-push`: user `jenkins-push`, pushes images to `nexus.atmos.lan:5000`; `sonar-token`: SonarQube Cloud token for the analysis of `atmos-dev` |
 | Job | `atmos`: `Jenkinsfile` from `develop` of `atmos-dev`, polls GitHub about every 5 minutes; parameter `BRANCH` for manual builds of a test branch (only `develop` publishes images) |
 | Metrics | `/prometheus/` (Prometheus plugin) answers without login; Traefik allows this path only from the cluster nodes (`atmos-ansible`) |

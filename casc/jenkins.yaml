@@ -68,3 +68,8 @@ unclassified:
   # Address of Jenkins behind Traefik, used in links and build notifications.
   location:
     url: https://jenkins.atmos.lan/
+  # Stage graph of the running or last build at the top of the job page and of each build page
+  # (Pipeline Graph View), like the workflow view of GitHub Actions.
+  pipelineGraphView:
+    showGraphOnJobPage: true
+    showGraphOnBuildPage: true
