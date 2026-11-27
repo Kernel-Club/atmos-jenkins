@@ -1,5 +1,5 @@
 # Plugins of the Jenkins image with all dependencies, pinned like a lock file: <id>:<version>
-# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow, locale, dark-theme, simple-theme-plugin, job-dsl, prometheus, warnings-ng, htmlpublisher, generic-webhook-trigger.
+# Direct plugins: configuration-as-code, workflow-aggregator, git, credentials, docker-workflow, locale, dark-theme, simple-theme-plugin, job-dsl, prometheus, warnings-ng, htmlpublisher, generic-webhook-trigger, pipeline-graph-view.
 # To update: resolve the latest versions of the direct plugins and replace this list (see README).
 analysis-model-api:14.21.0-1046.vb_feb_1256ee9f
 antisamy-markup-formatter:173.v680e3a_b_69ff3
@@ -56,6 +56,7 @@ mina-sshd-api-common:2.20.1-199.v8ce76b_c93542
 mina-sshd-api-core:2.20.1-199.v8ce76b_c93542
 nimbus-jose-jwt-api:10.10-12.vd4e6d651b_7f7
 pipeline-build-step:605.v00486e8f4b_3e
+pipeline-graph-view:1053.v9df19e6ceed2
 pipeline-groovy-lib:822.vc95f70dea_db_7
 pipeline-input-step:568.v0c9db_2652741
 pipeline-milestone-step:152.v6e22b_8cfc66c
