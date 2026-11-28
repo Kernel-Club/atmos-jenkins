@@ -57,3 +57,55 @@ pipelineJob('atmos-branch') {
     }
   }
 }
+
+// atmos-verify: checks of the deployed application (smoke, browser, ZAP), Jenkinsfile.verify in atmos-dev.
+// Started by Flux after a successful upgrade of the HelmRelease (Generic Webhook Trigger), or by hand.
+// The token of the webhook is a credential (Ansible Vault), so it is not in this file.
+pipelineJob('atmos-verify') {
+  description('Checks of the deployed Atmos after every deploy by Flux: smoke tests, Playwright, ZAP baseline. Pipeline: Jenkinsfile.verify in atmos-dev.')
+
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+            url('https://github.com/Kernel-Club/atmos-dev.git')
+          }
+          branch('*/develop')
+        }
+      }
+      scriptPath('Jenkinsfile.verify')
+      lightweight(true)
+    }
+  }
+
+  properties {
+    pipelineTriggers {
+      triggers {
+        genericTrigger {
+          // Message of the Flux event, shown as the cause of the build.
+          genericVariables {
+            genericVariable {
+              key('FLUX_MESSAGE')
+              value('$.message')
+              expressionType('JSONPath')
+              regexpFilter('')
+              defaultValue('')
+            }
+          }
+          genericRequestVariables {}
+          genericHeaderVariables {}
+          token('')
+          tokenCredentialId('verify-webhook-token')
+          causeString('Deployed by Flux: $FLUX_MESSAGE')
+          printContributedVariables(false)
+          printPostContent(false)
+          silentResponse(false)
+          shouldNotFlatten(false)
+          regexpFilterText('')
+          regexpFilterExpression('')
+        }
+      }
+    }
+  }
+}
