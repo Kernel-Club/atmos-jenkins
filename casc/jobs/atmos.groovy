@@ -1,9 +1,9 @@
 // Job DSL: the CI jobs of Atmos. Created by JCasC at every start of Jenkins.
 // Both jobs run the same pipeline: Jenkinsfile in atmos-dev. Only develop publishes images (Jenkinsfile).
 
-// atmos: every change of develop. The branch is fixed: SCM polling of a Pipeline job does not
+// develop-ci: every change of develop. The branch is fixed: SCM polling of a Pipeline job does not
 // expand build parameters, so a branch like '*/${BRANCH}' never matches and no build starts.
-pipelineJob('atmos') {
+pipelineJob('develop-ci') {
   description('CI of Atmos: checks, tests and images in Nexus for every change of develop. Pipeline: Jenkinsfile in atmos-dev.')
 
   definition {
@@ -32,9 +32,9 @@ pipelineJob('atmos') {
   }
 }
 
-// atmos-branch: manual builds of a test branch (for example to prove that a check stops the build).
+// test-ci-branches: manual builds of a test branch (for example to prove that a check stops the build).
 // No polling; the images are built but not published.
-pipelineJob('atmos-branch') {
+pipelineJob('test-ci-branches') {
   description('Manual checks of a test branch of atmos-dev. Images are built, not published. Pipeline: Jenkinsfile in atmos-dev.')
 
   parameters {
@@ -58,10 +58,10 @@ pipelineJob('atmos-branch') {
   }
 }
 
-// atmos-verify: checks of the deployed application (smoke, browser, ZAP), Jenkinsfile.verify in atmos-dev.
+// develop-cd-checks: checks of the deployed application (smoke, browser, ZAP), Jenkinsfile.verify in atmos-dev.
 // Started by Flux after a successful upgrade of the HelmRelease (Generic Webhook Trigger), or by hand.
 // The token of the webhook is a credential (Ansible Vault), so it is not in this file.
-pipelineJob('atmos-verify') {
+pipelineJob('develop-cd-checks') {
   description('Checks of the deployed Atmos after every deploy by Flux: smoke tests, Playwright, ZAP baseline. Pipeline: Jenkinsfile.verify in atmos-dev.')
 
   definition {
