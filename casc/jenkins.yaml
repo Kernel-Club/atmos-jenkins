@@ -26,6 +26,14 @@ jenkins:
   # No inbound agents: builds run on the built-in node.
   slaveAgentPort: -1
 
+  # Address of atmos.lan (Traefik of the cluster) for the tool containers of atmos-verify:
+  # there is no DNS server in the home network. Set by atmos-ansible.
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: ATMOS_APP_ADDRESS
+            value: ${ATMOS_APP_ADDRESS}
+
 credentials:
   system:
     domainCredentials:
@@ -43,6 +51,12 @@ credentials:
               id: sonar-token
               secret: ${SONAR_TOKEN}
               description: Analysis of atmos-dev in SonarQube Cloud
+          # Token of the webhook that Flux calls after a deploy (Ansible Vault): starts atmos-verify.
+          - string:
+              scope: GLOBAL
+              id: verify-webhook-token
+              secret: ${VERIFY_WEBHOOK_TOKEN}
+              description: Webhook of Flux that starts atmos-verify
 
 appearance:
   # English for everyone, whatever language the browser asks for.
